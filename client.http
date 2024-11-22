@@ -1,0 +1,34 @@
+@base_url = http://localhost:3000
+@id = {{upload_route.response.body.id}}
+
+
+GET {{base_url}}/posts
+
+###
+POST {{base_url}}/posts
+Content-Type: application/json
+
+{
+	"description": "Gato post",
+	"imgUrl": "https://placecats.com/millie/300/150",
+	"alt": "descrição da imagem"
+}
+
+###
+# @name upload_route
+POST {{base_url}}/upload
+Content-Type: multipart/form-data;boundary=--boundary
+
+----boundary
+Content-Disposition: form-data; name="image"; filename="100.png"
+Content-Type: image/png
+
+< ./100.png
+----boundary--
+###
+PUT {{base_url}}/posts/{{id}}
+Content-Type: application/json
+
+{
+	"alt": "gato pulando e texto em baixo"
+}
